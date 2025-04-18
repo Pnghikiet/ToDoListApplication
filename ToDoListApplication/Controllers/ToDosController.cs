@@ -31,7 +31,8 @@ namespace ToDoListApplication.Controllers
         {
             var todoToCreate = todo;
 
-            await _db.ToDoItems.AddAsync(todoToCreate);
+            _db.ToDoItems.Add(todoToCreate);
+            await _db.SaveChangesAsync();
 
             return Ok(todoToCreate);
         }
@@ -47,7 +48,7 @@ namespace ToDoListApplication.Controllers
             _db.ToDoItems.Remove(todo);
             await _db.SaveChangesAsync();
 
-            return Ok();
+            return Ok("Delete Complete");
         }
     }
 }
