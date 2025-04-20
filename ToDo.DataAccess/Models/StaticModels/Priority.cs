@@ -7,13 +7,10 @@ using System.Threading.Tasks;
 
 namespace ToDoListApplication.DataAccess.Models.StaticModels
 {
-    public enum Priority
+    public static class Priority
     {
-        [EnumMember(Value ="Low")]
-        Low,
-        [EnumMember(Value = "Medium")]
-        Medium,
-        [EnumMember(Value = "High")]
-        High
+        public static string LowPriority = "Low";
+        public static string MediumPriority = "Medium";
+        public static string HighPriority = "High";
     }
 }

@@ -34,9 +34,9 @@ namespace ToDoListApplication.Controllers
 
 
         [HttpPost]
-        public async Task<ActionResult<ToDoItem>> CreateToDo(ToDoItem todo)
+        public async Task<ActionResult<ToDoItemDTO>> CreateToDo(ToDoItemDTO todo)
         {
-            var todoToCreate = new ToDoItem(todo.Description);
+            var todoToCreate = _mapper.Map<ToDoItemDTO,ToDoItem>(todo);
 
             _db.ToDoItems.Add(todoToCreate);
             await _db.SaveChangesAsync();

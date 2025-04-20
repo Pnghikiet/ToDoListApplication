@@ -16,9 +16,9 @@ namespace ToDoListApplication.DataAccess.Data.SeedData
             {
                 var todos = new List<ToDoItem>
                 {
-                    new ToDoItem { Description = "Do homework", IsCleared = false, Priority= Priority.Low},
-                    new ToDoItem { Description = "Clean house", IsCleared = false, Priority= Priority.Low},
-                    new ToDoItem { Description = "Do Exercise", IsCleared = false, Priority= Priority.Low}
+                    new ToDoItem { Description = "Do homework", IsCleared = false, Priority= Priority.LowPriority},
+                    new ToDoItem { Description = "Clean house", IsCleared = false, Priority= Priority.LowPriority},
+                    new ToDoItem { Description = "Do Exercise", IsCleared = false, Priority= Priority.LowPriority}
                 };
 
                 context.ToDoItems.AddRange(todos);
