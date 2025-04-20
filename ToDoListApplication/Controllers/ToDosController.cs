@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ToDoListApplication.DataAccess.Data;
 using ToDoListApplication.DataAccess.Models;
+using ToDoListApplication.DTO;
 
 namespace ToDoListApplication.Controllers
 {
@@ -11,30 +13,43 @@ namespace ToDoListApplication.Controllers
     public class ToDosController : ControllerBase
     {
         private readonly ToDoContext _db;
+        private readonly IMapper _mapper;
 
-        public ToDosController(ToDoContext db)
+        public ToDosController(ToDoContext db, IMapper mapper)
         {
             _db = db;
+            _mapper = mapper;
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<ToDoItem>>> GetAllItem()
+        public async Task<ActionResult<List<ToDoItemDTO>>> GetAllItem()
         {
             var todos = await _db.ToDoItems.ToListAsync();
 
-            return Ok(todos);
+            var todoDto = _mapper.Map<List<ToDoItem>, List<ToDoItemDTO>>(todos);
+
+            return Ok(todoDto);
         }
 
 
         [HttpPost]
         public async Task<ActionResult<ToDoItem>> CreateToDo(ToDoItem todo)
         {
-            var todoToCreate = todo;
+            var todoToCreate = new ToDoItem(todo.Description);
 
             _db.ToDoItems.Add(todoToCreate);
             await _db.SaveChangesAsync();
 
             return Ok(todoToCreate);
+        }
+
+        [HttpPut]
+        public async Task<ActionResult<ToDoItem>> UpdateToDo(ToDoItem todo)
+        {
+            _db.ToDoItems.Update(todo);
+            await _db.SaveChangesAsync();
+
+            return Ok(todo);
         }
 
         [HttpDelete("{id}")]
