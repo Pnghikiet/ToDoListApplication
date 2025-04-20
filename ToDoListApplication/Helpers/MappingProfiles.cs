@@ -9,6 +9,7 @@ namespace ToDoListApplication.Helpers
         public MappingProfiles() 
         {
             CreateMap<ToDoItem, ToDoItemDTO>();
+            CreateMap<ToDoItemDTO, ToDoItem>();
         }
     }
 }

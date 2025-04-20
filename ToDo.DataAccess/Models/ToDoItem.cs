@@ -9,6 +9,10 @@ namespace ToDoListApplication.DataAccess.Models
 {
     public class ToDoItem
     {
+        public ToDoItem()
+        {
+        }
+
         public ToDoItem(string description)
         {
             Description = description;
