@@ -5,6 +5,7 @@ namespace ToDoListApplication.DTO
 {
     public class ToDoItemDTO
     {
+        [Required]
         public int ID { get; set; }
 
         [Required]

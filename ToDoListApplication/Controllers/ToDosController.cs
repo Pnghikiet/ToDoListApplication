@@ -45,12 +45,14 @@ namespace ToDoListApplication.Controllers
         }
 
         [HttpPut]
-        public async Task<ActionResult<ToDoItem>> UpdateToDo(ToDoItem todo)
+        public async Task<ActionResult<ToDoItemDTO>> UpdateToDo(ToDoItemDTO todoDto)
         {
-            _db.ToDoItems.Update(todo);
+            var todoToUpdate = _mapper.Map<ToDoItemDTO, ToDoItem>(todoDto);
+
+            _db.ToDoItems.Update(todoToUpdate);
             await _db.SaveChangesAsync();
 
-            return Ok(todo);
+            return Ok(todoToUpdate);
         }
 
         [HttpDelete("{id}")]
