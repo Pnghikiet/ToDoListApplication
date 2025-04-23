@@ -1,25 +1,16 @@
-<div class="bg-gradient-to-bl from-violet-500 to-fuchsia-500 h-screen">
+<div class="bg-gradient-to-bl from-violet-500 to-fuchsia-500 h-screen overflow-auto">
     <div class="flex flex-col container mx-auto p-4 ">
         <div class="flex justify-center pb-14">
             <h1 class="text-4xl text-white font-bold">To-Do List Application</h1>
         </div>
-        <div class="inline flex justify-center">
+        <div class="flex justify-center">
             <input placeholder="Search Todo..."
-             class="block w-96 p-4 ps-3 text-sm border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" type="search" [value]="SearchValue">
-            <button type="submit" class="px-12 ml-7 bg-blue-500 text-white rounded-lg hover:bg-indigo-600">Search</button>
-            <button type="submit" class="px-12 ml-7 bg-teal-500 rounded-lg hover:bg-emerald-700 text-white">
+             class="block w-96 p-4 ps-3 text-sm border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder:text-lg" type="search" [value]="SearchValue">
+            <button type="submit" class="px-12 ml-7 border border-stone-700 bg-blue-500 text-white rounded-lg hover:bg-indigo-600">Search</button>
+            <button type="submit" class="px-12 ml-7 border border-stone-700 bg-teal-500 rounded-lg hover:bg-emerald-700 text-white">
                 Add <i class="fa fa-solid fa-plus"></i>
             </button>
         </div>
-        <div class="mt-9 flex flex-col items-center justify-center space-y-7">
-            <div class="bg-white w-[750px] h-[120px] rounded-xl relative" >
-                <div class="absolute left-6 top-11 flex h-full">
-                    <input type="checkbox" class="size-6 me-6">
-                    <p class="ms-3 pl-4 w-[550px] bg-black">vfvf</p>
-                </div>
-            </div>
-            <div class="bg-white w-[750px] h-20 rounded-xl" ></div>
-            <div class="bg-white w-[750px] h-20 rounded-xl" ></div>
-        </div>
+        <app-todo-item></app-todo-item>
     </div>
 </div>
