@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment.development';
-import { Todo } from '../../shared/model/ToDo';
+import { Todo } from '../shared/model/ToDo';
+
 
 @Injectable({
   providedIn: 'root'
@@ -15,5 +16,10 @@ export class TodoService {
   getTodo()
   {
     return this.http.get<Todo[]>(this.baseUrl + "todos")
+  }
+
+  DeleteTodo(id: number)
+  {
+    return this.http.delete<string>(this.baseUrl + "todos/" + id)
   }
 }

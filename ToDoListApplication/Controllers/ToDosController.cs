@@ -56,7 +56,7 @@ namespace ToDoListApplication.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult<ToDoItem>> DeleteTodo(int id)
+        public async Task<ActionResult> DeleteTodo(int id)
         {
             var todo = await _db.ToDoItems.FindAsync(id);
 
@@ -66,7 +66,7 @@ namespace ToDoListApplication.Controllers
             _db.ToDoItems.Remove(todo);
             await _db.SaveChangesAsync();
 
-            return Ok("Delete Complete");
+            return Ok(new {message = "Delete Complete" });
         }
     }
 }

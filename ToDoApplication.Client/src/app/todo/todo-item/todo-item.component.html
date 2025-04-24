@@ -1,18 +1,34 @@
 <div class="mt-9 flex flex-col items-center justify-center space-y-7 ">
-    <div class="bg-white w-[750px] h-[120px] rounded-xl relative" *ngFor="let todo of todoListItem">
-        <input type="checkbox" class="absolute size-6 me-6 left-6 top-11" [checked]="todo.isCleared">
-        <p class="absolute top-5 left-16 ms-3 pl-4 text-lg">Title</p>
-        <p class="absolute top-4 left-1/2">Due date: dd/mm/yyyy</p>
-        <p class="absolute top-14 left-24 ms-3 pl-4 h-[50px] w-[450px] text-lg">{{todo.description}}</p>
-        <div class="flex flex-col absolute top-3 right-12 space-y-4">
-            <button class="p-2 w-[100px] border border-stone-700 bg-red-500 size-10 hover:bg-red-700 text-white rounded">
-                Delete
-                <i class="fa-solid fa-trash fa-lg"></i>
-            </button>
-            <button class="p-2 w-[100px] border border-stone-700 bg-yellow-400 hover:bg-amber-500 size-10 text-white rounded">
-                Update
-                <i class="fa-solid fa-pen-to-square fa-lg"></i>
-            </button>
+    <ng-container *ngIf="todoListItem.length > 0; else noTodoItem">
+        <div class="bg-white w-[750px] h-[120px] rounded-xl relative" *ngFor="let todo of todoListItem">
+            <input type="checkbox" class="absolute size-6 me-6 left-6 top-11" [checked]="todo.isCleared">
+            <p class="absolute top-5 left-16 ms-3 pl-4 text-lg">Title</p>
+            <p class="absolute top-4 left-1/2">Due date: dd/mm/yyyy</p>
+            <p class="absolute top-14 left-24 ms-3 pl-4 h-[50px] w-[450px] text-lg">{{todo.description}}</p>
+            <div class="flex flex-col absolute top-3 right-12 space-y-2">
+                <button class="p-2 w-[100px] border border-stone-700 bg-red-500 size-10 hover:bg-red-700 text-white rounded"
+                        (click)="onShowAlert(todo.id)">
+                    Delete
+                    <i class="fa-solid fa-trash fa-lg"></i>
+                </button>
+                <button class="p-2 w-[100px] border border-stone-700 bg-yellow-400 hover:bg-amber-500 size-10 text-white rounded">
+                    Update
+                    <i class="fa-solid fa-pen-to-square fa-lg"></i>
+                </button>
+            </div>
+            <!-- <swal #swalDelete
+                title="Delete?"
+                text="Are you sure to delete this todo?"
+                icon="warning"
+                [showCancelButton]="true"
+                cancelButtonText="cancel"
+                confirmButtonText="Delete"
+                (confirm)="onDeleteItem(todo.id)"
+            ></swal> -->
         </div>
-    </div>
+    </ng-container>
+    <ng-template #noTodoItem>
+        <p class="text-3xl text-white">There are no work to do</p>
+    </ng-template>
 </div>
+
