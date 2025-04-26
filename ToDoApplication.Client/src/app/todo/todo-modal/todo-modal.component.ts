@@ -3,6 +3,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { TodoService } from '../todo.service';
 import { environment } from '../../../environments/environment.development';
 import { Todo } from '../../shared/model/ToDo';
+import { ModalService } from '../../services/modal.service';
 
 @Component({
   selector: 'app-todo-modal',
@@ -11,23 +12,10 @@ import { Todo } from '../../shared/model/ToDo';
 })
 export class TodoModalComponent {
   @Input() isVisibility = false
-  @Output() ModalcloseEvent = new EventEmitter<boolean>()
-  @Input() todoId: number = 0
   baseUrl = environment.apiUrl
+  
 
-  constructor(private http: HttpClient, private todoSerevie: TodoService){}
+  constructor(private http: HttpClient, private todoSerevie: TodoService, public modalService: ModalService){}
 
 
-  onCloseModal()
-  {
-    this.isVisibility =true
-    this.ModalcloseEvent.emit(false)
-  }
-
-  onDeleteItem()
-  {
-    return this.http.delete<Todo>(this.baseUrl + "delete").subscribe({
-      next: success => success
-    })
-  }
 }

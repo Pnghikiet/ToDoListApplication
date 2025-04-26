@@ -4,6 +4,7 @@ import { Todo } from '../../shared/model/ToDo';
 import Swal from 'sweetalert2';
 import { HttpClient } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
+import { ModalService } from '../../services/modal.service';
 
 @Component({
   selector: 'app-todo-item',
@@ -14,7 +15,8 @@ export class TodoItemComponent implements OnInit{
 
   todoListItem: Todo[] =[]
 
-  constructor(private todoService: TodoService, private http: HttpClient, private toastrService: ToastrService){}
+  constructor(private todoService: TodoService, private http: HttpClient,
+    private toastrService: ToastrService, public modalService: ModalService){}
 
   ngOnInit(): void {
     this.todoService.getTodo().subscribe({

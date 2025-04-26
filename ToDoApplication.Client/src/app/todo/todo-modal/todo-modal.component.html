@@ -1,3 +1,51 @@
-<div class="fixed bg-opacity-50 inset-0 bg-black">
-
+<div (click)="modalService.closeModal()" class="fixed z-50 inset-0 overflow-y-auto bg-opacity-50 bg-gray-700" [hidden]="!modalService.isToggle">
+    <div class="flex items-center justify-center mt-10">
+        <div class="inline-block bg-white pt-4 px-8 pb-6 rounded-lg w-full max-w-md">
+            <div class="flex justify-between items-center pb-2">
+                <p class="text-xl font-bold">{{modalService.title}} To-do</p>
+                <div class="cursor-pointer z-50">
+                    <i class="fa-solid fa-xmark fa-lg"></i>
+                </div>
+            </div>
+            <hr>
+            <div class="pt-3">
+                <form >
+                    <div class="mb-2">
+                        <label class="inline-block mb-2">Title</label>
+                        <input type="text" class="block py-1 px-2 w-full border-2 border-gray-400
+                    transition duration-300 rounded-lg focus:outline-none focus:border-cyan-700">
+                    </div>
+                    <div class="mb-2">
+                        <label class="inline-block mb-2">Desciption</label>
+                        <textarea type="text" cols="30" class="size-48 block py-1 px-2 w-full border-2 border-gray-400
+                    transition duration-300 rounded-lg focus:outline-none focus:border-cyan-700"></textarea>
+                    </div>
+                    <div class="mb-2">
+                        <label class="inline-block mb-2">Priority</label>
+                        <div class="flex justify-evenly">
+                            <div>
+                                <input type="radio" name="priority" value="Low" class="mr-2">
+                                <label>Low</label>
+                            </div>
+                            <div>
+                                <input type="radio" name="priority" value="Medium" class="mr-2">
+                                <label>Medium</label>
+                            </div>
+                            <div>
+                                <input type="radio" name="priority" value="High" class="mr-2">
+                                <label>High</label>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <hr>
+                    <br>
+                    <div class="flex justify-evenly items-center">
+                        <input type="submit" value="Add" class="cursor-pointer text-white p-2 w-[90px] border rounded-lg border-stone-700 bg-green-success size-10 hover:bg-green-700">
+                        <input (click)="modalService.closeModal()" type="button" value="Cancel" class="cursor-pointer text-white p-2 w-[90px] border rounded-lg border-stone-700 size-10 bg-red-500 hover:bg-red-700">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>

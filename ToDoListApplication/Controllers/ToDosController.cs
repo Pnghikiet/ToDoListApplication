@@ -63,8 +63,8 @@ namespace ToDoListApplication.Controllers
             if (todo == null)
                 return NotFound();
 
-            //_db.ToDoItems.Remove(todo);
-            //await _db.SaveChangesAsync();
+            _db.ToDoItems.Remove(todo);
+            await _db.SaveChangesAsync();
 
             return Ok();
         }

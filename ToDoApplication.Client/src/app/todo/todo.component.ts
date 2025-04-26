@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ModalService } from '../services/modal.service';
 
 @Component({
   selector: 'app-todo',
@@ -7,4 +8,6 @@ import { Component } from '@angular/core';
 })
 export class TodoComponent {
   SearchValue:string = ""
+
+  constructor(public modalService: ModalService){}
 }

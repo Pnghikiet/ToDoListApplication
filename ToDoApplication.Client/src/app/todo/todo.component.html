@@ -6,7 +6,7 @@
         <input placeholder="Search Todo..."
          class="block w-96 p-4 ps-3 text-sm border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder:text-lg" type="search" [value]="SearchValue">
         <button type="submit" class="px-12 ml-7 border border-stone-700 bg-blue-500 text-white rounded-lg hover:bg-indigo-600">Search</button>
-        <button type="submit" class="px-12 ml-7 border border-stone-700 bg-teal-500 rounded-lg hover:bg-emerald-700 text-white">
+        <button (click)="modalService.openModal('Create')" type="submit" class="px-12 ml-7 border border-stone-700 bg-teal-500 rounded-lg hover:bg-emerald-700 text-white">
             Add <i class="fa fa-solid fa-plus"></i>
         </button>
     </div>
