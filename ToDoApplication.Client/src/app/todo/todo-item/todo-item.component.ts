@@ -42,10 +42,10 @@ export class TodoItemComponent implements OnInit{
   {
     this.todoService.DeleteTodo(id).subscribe({
       next: success => {
-        this.toastrService.success(success)
+        this.toastrService.success("Delete complete")
+        this.todoListItem = this.todoListItem.filter(todo => todo.id != id)
       },
       error: err => {
-        console.log(err)
         this.toastrService.error("Problem with delete item")
       }
     })

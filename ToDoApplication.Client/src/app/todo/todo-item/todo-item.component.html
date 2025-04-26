@@ -16,15 +16,12 @@
                     <i class="fa-solid fa-pen-to-square fa-lg"></i>
                 </button>
             </div>
-            <!-- <swal #swalDelete
-                title="Delete?"
-                text="Are you sure to delete this todo?"
-                icon="warning"
-                [showCancelButton]="true"
-                cancelButtonText="cancel"
-                confirmButtonText="Delete"
-                (confirm)="onDeleteItem(todo.id)"
-            ></swal> -->
+            <div class="absolute right-3 top-1" [ngClass]="{
+                'text-lime-400': todo.priority.toLowerCase() === 'low',
+                'text-yellow-500': todo.priority.toLowerCase() === 'medium',
+                'text-red-600': todo.priority.toLowerCase() === 'high'}">
+                <i class="fa-solid fa-circle"></i>
+            </div>
         </div>
     </ng-container>
     <ng-template #noTodoItem>
