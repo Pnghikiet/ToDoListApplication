@@ -1,6 +1,8 @@
 using Microsoft.EntityFrameworkCore;
+using ToDoListApplication.Business.Services.Interface;
 using ToDoListApplication.DataAccess.Data;
 using ToDoListApplication.DataAccess.Data.SeedData;
+using ToDoListApplication.DataAccess.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,6 +24,8 @@ builder.Services.AddDbContext<ToDoContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
+
+builder.Services.AddScoped<ITodoRepository, TodoRepository>();
 
 var app = builder.Build();
 

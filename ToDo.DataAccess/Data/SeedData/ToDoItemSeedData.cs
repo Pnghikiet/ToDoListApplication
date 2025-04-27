@@ -16,11 +16,12 @@ namespace ToDoListApplication.DataAccess.Data.SeedData
             {
                 var todos = new List<ToDoItem>
                 {
-                    new ToDoItem { Description = "Do homework", IsCleared = false, Priority= Priority.LowPriority},
-                    new ToDoItem { Description = "Clean house", IsCleared = false, Priority= Priority.LowPriority},
-                    new ToDoItem { Description = "Do Exercise", IsCleared = false, Priority= Priority.LowPriority}
+                    new ToDoItem { Description = "Do homework", IsCleared = false, Priority= Priority.HighPriority, Title = "Homework", DueDate = DateTime.Now.AddDays(3)},
+                    new ToDoItem { Description = "Clean house", IsCleared = false, Priority= Priority.MediumPriority, Title = "Housework", DueDate = DateTime.Now.AddDays(4)},
+                    new ToDoItem { Description = "Do Exercise", IsCleared = false, Priority= Priority.LowPriority, Title = "Exercise" ,DueDate = DateTime.Now.AddDays(4)},                
+                    new ToDoItem { Description = "Play chess", IsCleared = false, Priority= Priority.MediumPriority, Title = "Relax" ,DueDate = DateTime.Now.AddDays(5)},                
+                    new ToDoItem { Description = "Reading book", IsCleared = false, Priority= Priority.LowPriority, Title = "Reading book" ,DueDate = DateTime.Now.AddDays(2)},                
                 };
-
                 context.ToDoItems.AddRange(todos);
             }
             await context.SaveChangesAsync();

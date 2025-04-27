@@ -1,7 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using ToDoListApplication.DataAccess.Models.StaticModels;
 
-namespace ToDoListApplication.DTO
+namespace ToDoListApplication.Business.DTO
 {
     public class ToDoItemDTO
     {
@@ -13,6 +12,12 @@ namespace ToDoListApplication.DTO
 
         public bool IsCleared { get; set; }
 
+        [Required]
         public string Priority { get; set; }
+
+        [Required]
+        public string Title { get; set; }
+
+        public DateTime DueDate { get; set; }
     }
 }

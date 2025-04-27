@@ -5,7 +5,9 @@ using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 using ToDoListApplication.DataAccess.Data;
 using ToDoListApplication.DataAccess.Models;
-using ToDoListApplication.DTO;
+using ToDoListApplication.Business.DTO;
+using ToDoListApplication.DataAccess.Repositories;
+using ToDoListApplication.Business.Services.Interface;
 
 namespace ToDoListApplication.Controllers
 {
@@ -13,19 +15,19 @@ namespace ToDoListApplication.Controllers
     [ApiController]
     public class ToDosController : ControllerBase
     {
-        private readonly ToDoContext _db;
+        private readonly ITodoRepository _repo;
         private readonly IMapper _mapper;
 
-        public ToDosController(ToDoContext db, IMapper mapper)
+        public ToDosController(ITodoRepository repo, IMapper mapper)
         {
-            _db = db;
+            _repo = repo;
             _mapper = mapper;
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<ToDoItemDTO>>> GetAllItem()
+        public async Task<ActionResult<IReadOnlyList<ToDoItemDTO>>> GetAllItem()
         {
-            var todos = await _db.ToDoItems.ToListAsync();
+            var todos = await _repo.GetAllAsync();
 
             var todoDto = _mapper.Map<List<ToDoItem>, List<ToDoItemDTO>>(todos);
 
@@ -38,35 +40,41 @@ namespace ToDoListApplication.Controllers
         {
             var todoToCreate = _mapper.Map<ToDoItemDTO,ToDoItem>(todo);
 
-            _db.ToDoItems.Add(todoToCreate);
-            await _db.SaveChangesAsync();
+            var todoCreated = await _repo.CreateAsync(todoToCreate);
 
-            return Ok(todoToCreate);
+            return Ok(todoCreated);
         }
 
         [HttpPut]
         public async Task<ActionResult<ToDoItemDTO>> UpdateToDo(ToDoItemDTO todoDto)
         {
-            var todoToUpdate = _mapper.Map<ToDoItemDTO, ToDoItem>(todoDto);
+            try
+            {
+                var todoToUpdate = _mapper.Map<ToDoItemDTO, ToDoItem>(todoDto);
 
-            _db.ToDoItems.Update(todoToUpdate);
-            await _db.SaveChangesAsync();
+                var todoUpdated = _repo.UpdateAsync(todoToUpdate);
 
-            return Ok(todoToUpdate);
+                return Ok(todoUpdated);
+            }
+            catch(Exception ex)
+            {
+                return NotFound(new { message = ex.Message });
+            }
         }
 
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteTodo(int id)
         {
-            var todo = await _db.ToDoItems.FindAsync(id);
+            try
+            {
+                await _repo.DeleteAsync(id);
 
-            if (todo == null)
-                return NotFound();
-
-            _db.ToDoItems.Remove(todo);
-            await _db.SaveChangesAsync();
-
-            return Ok();
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return NotFound(new {message = ex.Message});
+            }
         }
     }
 }

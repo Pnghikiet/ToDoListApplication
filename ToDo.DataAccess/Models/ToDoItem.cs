@@ -13,8 +13,12 @@ namespace ToDoListApplication.DataAccess.Models
 
         public string Description { get; set; }
 
-        public Boolean IsCleared { get; set; } = false;
+        public Boolean IsCleared { get; set; }
 
         public string Priority { get; set; }
+
+        public string Title {  get; set; }
+
+        public DateTime DueDate { get; set; }
     }
 }

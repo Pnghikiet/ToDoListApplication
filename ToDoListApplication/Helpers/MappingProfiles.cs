@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using ToDoListApplication.DataAccess.Models;
-using ToDoListApplication.DTO;
+using ToDoListApplication.Business.DTO;
 
 namespace ToDoListApplication.Helpers
 {

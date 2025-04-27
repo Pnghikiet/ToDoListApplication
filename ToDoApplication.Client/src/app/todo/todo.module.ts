@@ -6,6 +6,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { TodoModalComponent } from './todo-modal/todo-modal.component';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { SharedModule } from '../shared/shared.module';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -19,7 +20,8 @@ import { SharedModule } from '../shared/shared.module';
     CommonModule,
     HttpClientModule,
     SweetAlert2Module.forRoot(),
-    SharedModule
+    SharedModule,
+    ReactiveFormsModule
   ],
   exports:[
     TodoComponent
