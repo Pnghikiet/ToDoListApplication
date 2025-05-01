@@ -46,24 +46,9 @@ namespace ToDoListApplication.DataAccess.Repositories
 
         public async Task<ToDoItem> UpdateAsync(ToDoItem todoItem)
         {
-            try
-            {
-                var todoToUpdate = await _db.ToDoItems.FindAsync(todoItem.ID);
-                if (todoToUpdate == null)
-                    throw new KeyNotFoundException($"The Todo is not found");
+            _db.ToDoItems.Update(todoItem);
 
-
-                _db.ToDoItems.Attach(todoItem);
-
-                _db.ToDoItems.Update(todoItem);
-                await _db.SaveChangesAsync();
-
-                
-            }
-            catch(Exception ex)
-            {
-                Debug.WriteLine(ex);
-            }
+            await _db.SaveChangesAsync();
 
             return todoItem;
         }

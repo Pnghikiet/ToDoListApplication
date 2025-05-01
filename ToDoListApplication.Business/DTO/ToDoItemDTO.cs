@@ -4,8 +4,7 @@ namespace ToDoListApplication.Business.DTO
 {
     public class ToDoItemDTO
     {
-        [Required]
-        public int ID { get; set; }
+        public int? ID { get; set; }
 
         [Required]
         public string Description { get; set; }
@@ -18,6 +17,7 @@ namespace ToDoListApplication.Business.DTO
         [Required]
         public string Title { get; set; }
 
+        [Required]
         public DateTime DueDate { get; set; }
     }
 }

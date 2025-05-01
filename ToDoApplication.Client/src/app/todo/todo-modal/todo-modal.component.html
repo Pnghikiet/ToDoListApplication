@@ -4,27 +4,34 @@
             <div class="flex justify-between items-center pb-2">
                 <p class="text-xl font-bold">{{modalService.title}} To-do</p>
                 <div class="cursor-pointer z-50">
-                    <i (click)="modalService.closeModal()" class="fa-solid fa-xmark fa-lg"></i>
+                    <i (click)="CloseModal()" class="fa-solid fa-xmark fa-lg"></i>
                 </div>
             </div>
             <hr>
             <div class="pt-3">
-                <form [formGroup]="todoForm">
+                <form [formGroup]="todoForm" (ngSubmit)="onCreateOrUpdate()">
+                    <input type="text" [formControl]="todoForm.controls.id" value="" class="hidden">
                     <div class="mb-2">
                         <label class="inline-block mb-2">Title</label>
                         <input type="text" [formControl]="todoForm.controls.title" class="block py-1 px-2 w-full border-2 border-gray-400
                     transition duration-300 rounded-lg focus:outline-none focus:border-cyan-700">
+                        <ng-container *ngIf="todoForm.controls.title.touched && todoForm.controls.title.touched">
+                            <p class="text-red-400" *ngIf="todoForm.controls.title.errors?.['required']">This field is required</p>
+                        </ng-container>
                     </div>
                     <div class="mb-2">
                         <label class="inline-block mb-2">Desciption</label>
                         <textarea type="text" [formControl]="todoForm.controls.description" cols="30" class="size-48 block py-1 px-2 w-full border-2 border-gray-400
                     transition duration-300 rounded-lg focus:outline-none focus:border-cyan-700"></textarea>
+                        <ng-container *ngIf="todoForm.controls.description.touched && todoForm.controls.description.touched">
+                            <p class="text-red-400" *ngIf="todoForm.controls.description.errors?.['required']">This field is required</p>
+                        </ng-container>
                     </div>
                     <div class="mb-2">
                         <label class="inline-block mb-2">Priority</label>
                         <div class="flex justify-evenly">
                             <div>
-                                <input type="radio" [formControl]="todoForm.controls.priority" name="priority" value="Low" class="mr-2">
+                                <input type="radio" [formControl]="todoForm.controls.priority" name="priority" value="Low" class="mr-2" >
                                 <label>Low</label>
                             </div>
                             <div>
@@ -36,13 +43,28 @@
                                 <label>High</label>
                             </div>
                         </div>
+                        <ng-container *ngIf="todoForm.controls.priority.touched && todoForm.controls.priority.touched">
+                            <p class="text-red-400" *ngIf="todoForm.controls.priority.errors?.['required']">This field is required</p>
+                        </ng-container>
+                    </div>
+                    <div class="mb-2">
+                        <label class="inline-block mb-2">Due Date</label>
+                        <mat-form-field appearance="fill" class="ml-3">
+                            <mat-label>Date:</mat-label>
+                            <input matInput [matDatepicker]="picker" [formControl]="todoForm.controls.duedate">
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                        </mat-form-field>
+                        <ng-container *ngIf="todoForm.controls.duedate.touched && todoForm.controls.duedate.touched">
+                            <p class="text-red-400" *ngIf="todoForm.controls.duedate.errors?.['invalid']">Date picked must be larger than today</p>
+                        </ng-container>
                     </div>
                     <br>
                     <hr>
                     <br>
                     <div class="flex justify-evenly items-center">
-                        <input type="submit" value="{{modalService.title}}" class="cursor-pointer text-white p-2 w-[90px] border rounded-lg border-stone-700 bg-green-success size-10 hover:bg-green-700">
-                        <input (click)="modalService.closeModal()" type="button" value="Cancel" class="cursor-pointer text-white p-2 w-[90px] border rounded-lg border-stone-700 size-10 bg-red-500 hover:bg-red-700">
+                        <input [disabled]="todoForm.invalid" type="submit" value="{{modalService.title}}" class="cursor-pointer text-white p-2 w-[90px] border rounded-lg border-stone-700 bg-green-success size-10 hover:bg-green-700 disabled:bg-green-400">
+                        <input (click)="CloseModal()" type="button" value="Cancel" class="cursor-pointer text-white p-2 w-[90px] border rounded-lg border-stone-700 size-10 bg-red-500 hover:bg-red-700">
                     </div>
                 </form>
             </div>

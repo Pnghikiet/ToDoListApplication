@@ -3,5 +3,7 @@ export interface Todo {
     description: string
     isCleared: boolean
     priority: string
+    title: string
+    dueDate: string
 }
   

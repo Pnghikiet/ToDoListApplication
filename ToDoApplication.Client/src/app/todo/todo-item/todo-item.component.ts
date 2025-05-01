@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { TodoService } from '../todo.service';
 import { Todo } from '../../shared/model/ToDo';
 import Swal from 'sweetalert2';
@@ -14,15 +14,13 @@ import { ModalService } from '../../services/modal.service';
 export class TodoItemComponent implements OnInit{
 
   todoListItem: Todo[] =[]
+  @Output() emitEvent = new EventEmitter<Todo>()
 
-  constructor(private todoService: TodoService, private http: HttpClient,
+  constructor(public todoService: TodoService, private http: HttpClient,
     private toastrService: ToastrService, public modalService: ModalService){}
 
   ngOnInit(): void {
-    this.todoService.getTodo().subscribe({
-      next: todos => this.todoListItem = todos,
-      error: err => console.log("Error connection")
-    })
+    this.todoService.getTodo()
   }
 
   onShowAlert(id:number)
@@ -45,7 +43,7 @@ export class TodoItemComponent implements OnInit{
     this.todoService.DeleteTodo(id).subscribe({
       next: success => {
         this.toastrService.success("Delete complete")
-        this.todoListItem = this.todoListItem.filter(todo => todo.id != id)
+        this.todoService.removeTodoItemSource(id)
       },
       error: err => {
         this.toastrService.error("Problem with delete item")

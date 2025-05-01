@@ -42,24 +42,17 @@ namespace ToDoListApplication.Controllers
 
             var todoCreated = await _repo.CreateAsync(todoToCreate);
 
-            return Ok(todoCreated);
+            return Ok(_mapper.Map<ToDoItem, ToDoItemDTO>(todoCreated));
         }
 
         [HttpPut]
         public async Task<ActionResult<ToDoItemDTO>> UpdateToDo(ToDoItemDTO todoDto)
         {
-            try
-            {
-                var todoToUpdate = _mapper.Map<ToDoItemDTO, ToDoItem>(todoDto);
+            var todoToUpdate = _mapper.Map<ToDoItemDTO, ToDoItem>(todoDto);
 
-                var todoUpdated = _repo.UpdateAsync(todoToUpdate);
+            var todoUpdated = await _repo.UpdateAsync(todoToUpdate);
 
-                return Ok(todoUpdated);
-            }
-            catch(Exception ex)
-            {
-                return NotFound(new { message = ex.Message });
-            }
+            return Ok(_mapper.Map<ToDoItem,ToDoItemDTO>(todoUpdated));
         }
 
         [HttpDelete("{id}")]

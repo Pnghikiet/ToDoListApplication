@@ -10,4 +10,5 @@ export class TodoComponent {
   SearchValue:string = ""
 
   constructor(public modalService: ModalService){}
-}
+
+  }
