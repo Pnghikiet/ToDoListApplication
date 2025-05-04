@@ -5,9 +5,9 @@ VisualStudioVersion = 17.8.34330.188
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ToDoListApplication", "ToDoListApplication\ToDoListApplication.csproj", "{D74FC2A5-3C71-4398-A334-C7FB6B17FF0A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToDoListApplication.DataAccess", "ToDo.DataAccess\ToDoListApplication.DataAccess.csproj", "{1A9D4A80-2A29-401B-A318-B6A795A1854D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ToDoListApplication.DataAccess", "ToDo.DataAccess\ToDoListApplication.DataAccess.csproj", "{1A9D4A80-2A29-401B-A318-B6A795A1854D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToDoListApplication.Business", "ToDoListApplication.Business\ToDoListApplication.Business.csproj", "{2F48CB1E-A831-49E3-BF49-36087F5EE796}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ToDoListApplication.Business", "ToDoListApplication.Business\ToDoListApplication.Business.csproj", "{2F48CB1E-A831-49E3-BF49-36087F5EE796}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

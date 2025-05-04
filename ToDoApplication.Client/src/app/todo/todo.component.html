@@ -1,5 +1,5 @@
 <div class="flex flex-col container mx-auto p-4 ">
-    <div class="flex justify-center pb-14">
+    <div class="flex justify-center pb-10">
         <h1 class="text-4xl text-white font-bold">To-Do List Application</h1>
     </div>
     <div class="flex justify-center">
@@ -10,6 +10,20 @@
             Add <i class="fa fa-solid fa-plus"></i>
         </button>
     </div>
-    <app-todo-item></app-todo-item>
+    <div class="mt-9 flex flex-col items-center justify-center space-y-7 ">
+        <div *ngIf="(todoService.todo$ | async) === null">
+            <p class="text-3xl text-white">There are no work to do</p>
+        </div>
+        <ng-container *ngIf="(todoService.todo$| async) as todos">
+            <div *ngFor="let todo of todos | paginate: {itemsPerPage: todoService.pagination?.pageSize, currentPage: todoService.pagination?.pageIndex, totalItems: todoService.pagination?.totalItem}" >
+                <app-todo-item [todoItem]="todo"></app-todo-item>
+            </div>
+        </ng-container>
+    </div>
+    <div class="flex items-center justify-center mt-4">
+        <pagination-controls 
+            class="text-xl"
+            (pageChange)="onPageChange($event)"></pagination-controls>
+    </div>
     <app-todo-modal></app-todo-modal>
 </div>

@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { NgxPaginationModule } from 'ngx-pagination';
 import { ToastrModule } from 'ngx-toastr';
 
 
@@ -10,7 +11,7 @@ import { ToastrModule } from 'ngx-toastr';
       timeOut: 5000,
       positionClass:'toast-bottom-right',
       preventDuplicates: true,
-    })    
+    })
   ],
   exports:[
   ]

@@ -1,8 +1,10 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment.development';
 import { Todo } from '../shared/model/ToDo';
 import { BehaviorSubject } from 'rxjs';
+import { Pagination } from '../shared/model/Pagination';
+import { Params } from '../shared/model/Params';
 
 
 @Injectable({
@@ -13,33 +15,35 @@ export class TodoService {
   baseUrl = environment.apiUrl
   private todoSource = new BehaviorSubject<Todo[]>([])
   todo$ = this.todoSource.asObservable()
+  pagination? :Pagination<Todo[]>
+  params = new Params()
   
   
   constructor(private http: HttpClient) { }
 
   getTodo()
   {
-    this.http.get<Todo[]>(this.baseUrl + "todos").subscribe({
+    let params = new HttpParams()
+
+    params = params.append('pageindex',this.params.pageIndex)
+    params = params.append('pagesize',this.params.pageSize)
+
+    this.http.get<Pagination<Todo[]>>(this.baseUrl + "todos",{params}).subscribe({
       next: todo =>{
-        this.todoSource.next(todo)
+        this.todoSource.next(todo.data)
+        this.pagination = todo
       }
     })
   }
 
-  addTodoSource(todo: Todo)
+  setParams(params: Params)
   {
-    const current = this.todoSource.value
-    this.todoSource.next([...current, todo])
+    this.params =params
   }
 
-  updateTodoSource(todo: Todo)
+  getParams()
   {
-    const current = this.todoSource.value
-    const updatedTodo = current.map(todoToUpdate => 
-      todoToUpdate.id === todo.id ? {...todoToUpdate, ...todo} : todoToUpdate
-    )
-    this.todoSource.next(updatedTodo)
-    
+    return this.params
   }
 
   removeTodoItemSource(id:number)

@@ -22,8 +22,11 @@ export class ModalService {
       this.isToggle = true
 
       if(titleModal.toLocaleLowerCase() === 'update' && todoValue)
+      {
         this.setFormData(todoValue)
         this.todo = todoValue
+        console.log(todoValue)
+      }
     }
   }
 

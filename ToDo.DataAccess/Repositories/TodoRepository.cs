@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using ToDoListApplication.Business.Services.Interface;
 using ToDoListApplication.DataAccess.Data;
 using ToDoListApplication.DataAccess.Models;
+using ToDoListApplication.DataAccess.Parammeters;
 
 namespace ToDoListApplication.DataAccess.Repositories
 {
@@ -39,9 +40,20 @@ namespace ToDoListApplication.DataAccess.Repositories
             await _db.SaveChangesAsync();
         }
 
-        public async Task<List<ToDoItem>> GetAllAsync()
+        public async Task<List<ToDoItem>> GetAllAsync(Params? param = null)
         {
-            return await _db.ToDoItems.ToListAsync();
+            if (param == null)
+                return await _db.ToDoItems.ToListAsync();
+            var query = _db.ToDoItems.AsQueryable();
+
+            var result  = await query.Skip((param.PageIndex - 1) * param.PageSize).Take(param.PageSize).ToListAsync();
+
+            return result;
+        }
+
+        public async Task<int> CountItemAsync()
+        {
+            return await _db.ToDoItems.CountAsync();
         }
 
         public async Task<ToDoItem> UpdateAsync(ToDoItem todoItem)

@@ -7,6 +7,7 @@ import { FormControl, FormControlName, FormGroup, Validators } from '@angular/fo
 import { validDate } from '../../shared/Validators/CheckValidDate';
 import { Todo } from '../../shared/model/ToDo';
 import { ToastrService } from 'ngx-toastr';
+import moment from 'moment-timezone';
 
 @Component({
   selector: 'app-todo-modal',
@@ -56,20 +57,23 @@ export class TodoModalComponent implements OnInit{
       this.todoService.updateTodo(formatedTodoData as Todo).subscribe({
         next: data => {
           this.toastr.success('Update completed')
-          this.todoService.updateTodoSource(data)
           this.CloseModal()
+          this.todoService.getTodo()
         }
       })
     }
     if(this.modalService.title.toLocaleLowerCase() === 'create')
     {
+      console.log(this.todoForm.value)
+
       const formatedTodoData = this.convertDateToString()
 
+      console.log(formatedTodoData)
       this.todoService.createTodo(formatedTodoData as Todo).subscribe({
         next: data => {
           this.toastr.success('Create success')
-          this.todoService.addTodoSource(data)
           this.CloseModal()
+          this.todoService.getTodo()
         }
       })
     }
@@ -78,6 +82,8 @@ export class TodoModalComponent implements OnInit{
   CloseModal()
   {
     this.todoForm.reset()
+    this.todoForm.controls.isCleared.setValue(false)
+    this.todoForm.controls.duedate.setValue(new Date)
     this.modalService.closeModal() 
   }
 
@@ -87,7 +93,10 @@ export class TodoModalComponent implements OnInit{
       
     const formatedData = Object.entries(todoData).reduce((acc,[key,value]) =>{
       if(value instanceof Date)
-        acc[key] = value.toISOString()
+      {
+        const date = moment.utc(value).tz('Asia/Bangkok').format()
+        acc[key] = date
+      }
       else
         acc[key] = value
       return acc

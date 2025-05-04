@@ -8,6 +8,8 @@ using ToDoListApplication.DataAccess.Models;
 using ToDoListApplication.Business.DTO;
 using ToDoListApplication.DataAccess.Repositories;
 using ToDoListApplication.Business.Services.Interface;
+using ToDoListApplication.Helpers;
+using ToDoListApplication.DataAccess.Parammeters;
 
 namespace ToDoListApplication.Controllers
 {
@@ -25,13 +27,20 @@ namespace ToDoListApplication.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IReadOnlyList<ToDoItemDTO>>> GetAllItem()
+        public async Task<ActionResult<IReadOnlyList<ToDoItemDTO>>> GetAllItem([FromQuery]Params param)
         {
-            var todos = await _repo.GetAllAsync();
+            Debug.WriteLine($"Page index is : {param.PageIndex}, Page size is: {param.PageSize}");
+
+
+            var todos = await _repo.GetAllAsync(param);
+
+            var total = await _repo.CountItemAsync();
+
+            var totalPage = (int)Math.Ceiling(total * 1.0/ param.PageSize);
 
             var todoDto = _mapper.Map<List<ToDoItem>, List<ToDoItemDTO>>(todos);
 
-            return Ok(todoDto);
+            return Ok(new Pagination<ToDoItemDTO>(param.PageSize, param.PageIndex,total,totalPage,todoDto));
         }
 
 
