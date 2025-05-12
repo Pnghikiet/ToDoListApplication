@@ -29,12 +29,10 @@ namespace ToDoListApplication.Controllers
         [HttpGet]
         public async Task<ActionResult<IReadOnlyList<ToDoItemDTO>>> GetAllItem([FromQuery]Params param)
         {
-            Debug.WriteLine($"Page index is : {param.PageIndex}, Page size is: {param.PageSize}");
-
 
             var todos = await _repo.GetAllAsync(param);
 
-            var total = await _repo.CountItemAsync();
+            var total = await _repo.CountItemAsync(param.UserID);
 
             var totalPage = (int)Math.Ceiling(total * 1.0/ param.PageSize);
 
@@ -45,21 +43,21 @@ namespace ToDoListApplication.Controllers
 
 
         [HttpPost]
-        public async Task<ActionResult<ToDoItemDTO>> CreateToDo(ToDoItemDTO todo)
+        public async Task<ActionResult<ToDoItemDTO>> CreateToDo([FromBody]ToDoItemDTO todo, [FromQuery] string userId)
         {
             var todoToCreate = _mapper.Map<ToDoItemDTO,ToDoItem>(todo);
 
-            var todoCreated = await _repo.CreateAsync(todoToCreate);
+            var todoCreated = await _repo.CreateAsync(todoToCreate,userId);
 
             return Ok(_mapper.Map<ToDoItem, ToDoItemDTO>(todoCreated));
         }
 
         [HttpPut]
-        public async Task<ActionResult<ToDoItemDTO>> UpdateToDo(ToDoItemDTO todoDto)
+        public async Task<ActionResult<ToDoItemDTO>> UpdateToDo(ToDoItemDTO todoDto, [FromQuery] string userId)
         {
             var todoToUpdate = _mapper.Map<ToDoItemDTO, ToDoItem>(todoDto);
 
-            var todoUpdated = await _repo.UpdateAsync(todoToUpdate);
+            var todoUpdated = await _repo.UpdateAsync(todoToUpdate,userId);
 
             return Ok(_mapper.Map<ToDoItem,ToDoItemDTO>(todoUpdated));
         }
@@ -77,6 +75,16 @@ namespace ToDoListApplication.Controllers
             {
                 return NotFound(new {message = ex.Message});
             }
+        }
+
+        [HttpPatch]
+        public async Task<ActionResult<ToDoItemDTO>> TodoClear(ToDoItemDTO todoDto)
+        {
+            var todoItemClear = _mapper.Map<ToDoItemDTO, ToDoItem>(todoDto);
+
+            var todoToClear = await _repo.ClearItemAsync(todoItemClear);
+
+            return Ok(_mapper.Map<ToDoItem,ToDoItemDTO>(todoToClear));
         }
     }
 }

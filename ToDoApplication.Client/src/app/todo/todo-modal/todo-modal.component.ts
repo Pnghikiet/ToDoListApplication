@@ -64,11 +64,8 @@ export class TodoModalComponent implements OnInit{
     }
     if(this.modalService.title.toLocaleLowerCase() === 'create')
     {
-      console.log(this.todoForm.value)
-
       const formatedTodoData = this.convertDateToString()
 
-      console.log(formatedTodoData)
       this.todoService.createTodo(formatedTodoData as Todo).subscribe({
         next: data => {
           this.toastr.success('Create success')

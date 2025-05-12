@@ -12,6 +12,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatInputModule} from '@angular/material/input';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { TodoRoutingModule } from './todo-routing.module';
 
 
 
@@ -31,7 +32,8 @@ import { NgxPaginationModule } from 'ngx-pagination';
     MatFormFieldModule,
     MatNativeDateModule,
     MatInputModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    TodoRoutingModule
   ],
   exports:[
     TodoComponent

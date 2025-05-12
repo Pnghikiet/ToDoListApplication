@@ -1,6 +1,6 @@
 <ng-container *ngIf="todoItem">
     <div class="bg-white w-[750px] h-[120px] rounded-xl relative">
-        <input type="checkbox" class="absolute size-6 me-6 left-6 top-11" [checked]="todoItem.isCleared">
+        <input type="checkbox" (click)="onCleared(todoItem)" class="absolute size-6 me-6 left-6 top-11">
         <p class="absolute top-5 left-16 ms-3 pl-4 text-lg">{{todoItem.title}}</p>
         <p class="absolute top-4 left-1/2">Due date: {{todoItem.dueDate | date: 'dd-MM-yyyy'}}</p>
         <p class="absolute top-14 left-24 ms-3 pl-4 h-[50px] w-[450px] text-lg">{{todoItem.description}}</p>

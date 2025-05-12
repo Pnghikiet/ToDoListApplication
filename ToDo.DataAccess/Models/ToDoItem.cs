@@ -20,5 +20,7 @@ namespace ToDoListApplication.DataAccess.Models
         public string Title {  get; set; }
 
         public DateTime DueDate { get; set; }
+
+        public string UserId { get; set; }
     }
 }

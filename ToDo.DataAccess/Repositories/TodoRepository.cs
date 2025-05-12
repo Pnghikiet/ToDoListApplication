@@ -21,8 +21,9 @@ namespace ToDoListApplication.DataAccess.Repositories
             _db = db;
         }
 
-        public async Task<ToDoItem> CreateAsync(ToDoItem todoItem)
+        public async Task<ToDoItem> CreateAsync(ToDoItem todoItem,string userId)
         {
+            todoItem.UserId = userId;
             _db.ToDoItems.Add(todoItem);
             await _db.SaveChangesAsync();
 
@@ -46,20 +47,35 @@ namespace ToDoListApplication.DataAccess.Repositories
                 return await _db.ToDoItems.ToListAsync();
             var query = _db.ToDoItems.AsQueryable();
 
+            query = query.Where(todo => todo.IsCleared == false && todo.UserId == param.UserID);
+
             var result  = await query.Skip((param.PageIndex - 1) * param.PageSize).Take(param.PageSize).ToListAsync();
 
             return result;
         }
 
-        public async Task<int> CountItemAsync()
+        public async Task<int> CountItemAsync(string userId)
         {
-            return await _db.ToDoItems.CountAsync();
+            return await _db.ToDoItems.Where(todo => todo.IsCleared == false && todo.UserId == userId).CountAsync();
         }
 
-        public async Task<ToDoItem> UpdateAsync(ToDoItem todoItem)
+        public async Task<ToDoItem> UpdateAsync(ToDoItem todoItem, string userId)
         {
+            todoItem.UserId = userId;
+
+
             _db.ToDoItems.Update(todoItem);
 
+            await _db.SaveChangesAsync();
+
+            return todoItem;
+        }
+
+        public async Task<ToDoItem> ClearItemAsync(ToDoItem todoItem)
+        {
+            todoItem.IsCleared = true;
+
+            _db.Update(todoItem);
             await _db.SaveChangesAsync();
 
             return todoItem;

@@ -11,9 +11,10 @@ namespace ToDoListApplication.Business.Services.Interface
     public interface ITodoRepository
     {
         Task<List<ToDoItem>> GetAllAsync(Params? param = null);
-        Task<ToDoItem> CreateAsync(ToDoItem todoItem);
-        Task<ToDoItem> UpdateAsync(ToDoItem todoItem);
+        Task<ToDoItem> CreateAsync(ToDoItem todoItem,string userId);
+        Task<ToDoItem> UpdateAsync(ToDoItem todoItem,string userId);
         Task DeleteAsync(int id);
-        Task<int> CountItemAsync();
+        Task<int> CountItemAsync(string userId);
+        Task<ToDoItem> ClearItemAsync(ToDoItem todoItem);
     }
 }

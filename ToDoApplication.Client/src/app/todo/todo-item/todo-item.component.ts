@@ -6,6 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
 import { ModalService } from '../../services/modal.service';
 import { Params } from '../../shared/model/Params';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-todo-item',
@@ -17,7 +18,7 @@ export class TodoItemComponent implements OnInit{
   
   @Output() emitEvent = new EventEmitter<Todo>()
 
-  constructor(public todoService: TodoService, private http: HttpClient,
+  constructor(public todoService: TodoService,
     private toastrService: ToastrService, public modalService: ModalService){}
 
   ngOnInit(): void {
@@ -40,16 +41,25 @@ export class TodoItemComponent implements OnInit{
 
   onDeleteItem(id: number)
   {
-    let param = new Params()
+    this.todoService.resetParams()
     this.todoService.DeleteTodo(id).subscribe({
       next: success => {
         this.toastrService.success("Delete complete")
         this.todoService.removeTodoItemSource(id)
-        this.todoService.setParams(param)
         this.todoService.getTodo()
       },
       error: err => {
         this.toastrService.error("Problem with delete item")
+      }
+    })
+  }
+
+  onCleared(todo: Todo)
+  {
+    this.todoService.resetParams()
+    this.todoService.completeTodo(todo).subscribe({
+      next: result => {
+        this.todoService.getTodo()
       }
     })
   }

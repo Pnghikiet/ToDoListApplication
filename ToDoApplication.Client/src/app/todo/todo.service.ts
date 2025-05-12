@@ -5,6 +5,7 @@ import { Todo } from '../shared/model/ToDo';
 import { BehaviorSubject } from 'rxjs';
 import { Pagination } from '../shared/model/Pagination';
 import { Params } from '../shared/model/Params';
+import { AuthService } from '../auth/auth.service';
 
 
 @Injectable({
@@ -19,21 +20,30 @@ export class TodoService {
   params = new Params()
   
   
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private authService: AuthService) { }
 
   getTodo()
   {
     let params = new HttpParams()
 
+    const userId = this.authService.getUserId()
+
     params = params.append('pageindex',this.params.pageIndex)
     params = params.append('pagesize',this.params.pageSize)
+    params = params.append('userid',userId)
 
     this.http.get<Pagination<Todo[]>>(this.baseUrl + "todos",{params}).subscribe({
       next: todo =>{
         this.todoSource.next(todo.data)
         this.pagination = todo
+        console.log(todo)
       }
     })
+  }
+
+  setTodoSource()
+  {
+    this.todoSource.next([])
   }
 
   setParams(params: Params)
@@ -44,6 +54,11 @@ export class TodoService {
   getParams()
   {
     return this.params
+  }
+
+  resetParams()
+  {
+    this.params = new Params()
   }
 
   removeTodoItemSource(id:number)
@@ -60,11 +75,35 @@ export class TodoService {
 
   createTodo(todo : Todo)
   {
-    return this.http.post<Todo>(this.baseUrl + "todos",todo)
+    let params = new HttpParams()
+
+    const userId = this.authService.getUserId()
+
+    params = params.append('userId',userId)
+
+    console.log(params)
+
+    return this.http.post<Todo>(this.baseUrl + "todos" ,todo, { params})
   }
 
   updateTodo(todo: Todo)
   {
-    return this.http.put<Todo>(this.baseUrl + "todos",todo)
+    let params = new HttpParams()
+
+    const userId = this.authService.getUserId()
+
+    params = params.append('userId',userId)
+
+    return this.http.put<Todo>(this.baseUrl + "todos",todo,{params})
+  }
+
+  completeTodo(todo: Todo)
+  {
+    return this.http.patch<Todo>(this.baseUrl + 'todos/', todo)
+  }
+
+  getUsername(): string
+  {
+    return this.authService.getUserName()
   }
 }

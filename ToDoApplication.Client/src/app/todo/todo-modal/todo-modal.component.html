@@ -15,7 +15,7 @@
                         <label class="inline-block mb-2">Title</label>
                         <input type="text" [formControl]="todoForm.controls.title" class="block py-1 px-2 w-full border-2 border-gray-400
                     transition duration-300 rounded-lg focus:outline-none focus:border-cyan-700">
-                        <ng-container *ngIf="todoForm.controls.title.touched && todoForm.controls.title.touched">
+                        <ng-container *ngIf="todoForm.controls.title.touched && todoForm.controls.title.dirty">
                             <p class="text-red-400" *ngIf="todoForm.controls.title.errors?.['required']">This field is required</p>
                         </ng-container>
                     </div>
@@ -23,7 +23,7 @@
                         <label class="inline-block mb-2">Desciption</label>
                         <textarea type="text" [formControl]="todoForm.controls.description" cols="30" class="size-48 block py-1 px-2 w-full border-2 border-gray-400
                     transition duration-300 rounded-lg focus:outline-none focus:border-cyan-700"></textarea>
-                        <ng-container *ngIf="todoForm.controls.description.touched && todoForm.controls.description.touched">
+                        <ng-container *ngIf="todoForm.controls.description.touched && todoForm.controls.description.dirty">
                             <p class="text-red-400" *ngIf="todoForm.controls.description.errors?.['required']">This field is required</p>
                         </ng-container>
                     </div>
@@ -43,7 +43,7 @@
                                 <label>High</label>
                             </div>
                         </div>
-                        <ng-container *ngIf="todoForm.controls.priority.touched && todoForm.controls.priority.touched">
+                        <ng-container *ngIf="todoForm.controls.priority.touched && todoForm.controls.priority.dirty">
                             <p class="text-red-400" *ngIf="todoForm.controls.priority.errors?.['required']">This field is required</p>
                         </ng-container>
                     </div>
@@ -55,7 +55,7 @@
                             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                             <mat-datepicker #picker></mat-datepicker>
                         </mat-form-field>
-                        <ng-container *ngIf="todoForm.controls.duedate.touched && todoForm.controls.duedate.touched">
+                        <ng-container *ngIf="todoForm.controls.duedate.touched && todoForm.controls.duedate.dirty">
                             <p class="text-red-400" *ngIf="todoForm.controls.duedate.errors?.['invalid']">Date picked must be larger than today</p>
                         </ng-container>
                     </div>

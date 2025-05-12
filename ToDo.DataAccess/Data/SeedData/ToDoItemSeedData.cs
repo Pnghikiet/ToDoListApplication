@@ -16,11 +16,11 @@ namespace ToDoListApplication.DataAccess.Data.SeedData
             {
                 var todos = new List<ToDoItem>
                 {
-                    new ToDoItem { Description = "Do homework", IsCleared = false, Priority= Priority.HighPriority, Title = "Homework", DueDate = DateTime.Now.AddDays(3)},
-                    new ToDoItem { Description = "Clean house", IsCleared = false, Priority= Priority.MediumPriority, Title = "Housework", DueDate = DateTime.Now.AddDays(4)},
-                    new ToDoItem { Description = "Do Exercise", IsCleared = false, Priority= Priority.LowPriority, Title = "Exercise" ,DueDate = DateTime.Now.AddDays(4)},                
-                    new ToDoItem { Description = "Play chess", IsCleared = false, Priority= Priority.MediumPriority, Title = "Relax" ,DueDate = DateTime.Now.AddDays(5)},                
-                    new ToDoItem { Description = "Reading book", IsCleared = false, Priority= Priority.LowPriority, Title = "Reading book" ,DueDate = DateTime.Now.AddDays(2)},                
+                    new ToDoItem { Description = "Do homework", IsCleared = false, Priority= Priority.HighPriority, Title = "Homework", DueDate = DateTime.Now.AddDays(3), UserId = "101af0c8-7bd7-4918-a3e9-362659550411"},
+                    new ToDoItem { Description = "Clean house", IsCleared = false, Priority= Priority.MediumPriority, Title = "Housework", DueDate = DateTime.Now.AddDays(4), UserId = "101af0c8-7bd7-4918-a3e9-362659550411"},
+                    new ToDoItem { Description = "Do Exercise", IsCleared = false, Priority= Priority.LowPriority, Title = "Exercise" ,DueDate = DateTime.Now.AddDays(4), UserId = "40ce2ee5-65ed-456b-94df-434801365be7"},                
+                    new ToDoItem { Description = "Play chess", IsCleared = false, Priority= Priority.MediumPriority, Title = "Relax" ,DueDate = DateTime.Now.AddDays(5), UserId = "40ce2ee5-65ed-456b-94df-434801365be7"},                
+                    new ToDoItem { Description = "Reading book", IsCleared = false, Priority= Priority.LowPriority, Title = "Reading book" ,DueDate = DateTime.Now.AddDays(2), UserId = "101af0c8-7bd7-4918-a3e9-362659550411"},                
                 };
                 context.ToDoItems.AddRange(todos);
             }

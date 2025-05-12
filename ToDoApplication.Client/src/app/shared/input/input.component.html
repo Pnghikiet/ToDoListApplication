@@ -1,0 +1,10 @@
+<input type="{{inputType}}" placeholder="{{inputPlaceholder}}" [formControl]="control" 
+    class="block py-1 px-2 w-full border-2 border-gray-400
+    transition duration-300 rounded-lg focus:outline-none focus:border-cyan-700"
+    (input)="apiError = null">
+<ng-container *ngIf="control.touched && control.dirty">
+    <p class="text-red-400" *ngIf="control?.errors?.['required']">This field is required</p>
+    <p class="text-red-400" *ngIf="control?.errors?.['email']">Email is not valid</p>
+    <p class="text-red-400" *ngIf="control?.errors?.['pattern']">Password need at least 8 characters. must contain at least 1 uppercase letter, 1 lowercase letter, 1 number and 1 special character</p>
+    <p class="text-red-400" *ngIf="apiError">{{apiError}}</p>
+</ng-container>
