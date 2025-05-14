@@ -9,10 +9,11 @@ using ToDoListApplication.Business.Services.Interface;
 using ToDoListApplication.DataAccess.Data;
 using ToDoListApplication.DataAccess.Models;
 using ToDoListApplication.DataAccess.Parammeters;
+using ToDoListApplication.DataAccess.Specifications;
 
 namespace ToDoListApplication.DataAccess.Repositories
 {
-    public class TodoRepository : ITodoRepository
+    public class TodoRepository<T> : ITodoRepository<T> where T : class
     {
         private readonly ToDoContext _db;
 
@@ -41,22 +42,14 @@ namespace ToDoListApplication.DataAccess.Repositories
             await _db.SaveChangesAsync();
         }
 
-        public async Task<List<ToDoItem>> GetAllAsync(Params? param = null)
+        public async Task<IReadOnlyList<T>> GetAllAsync(Ispecification<T> spec)
         {
-            if (param == null)
-                return await _db.ToDoItems.ToListAsync();
-            var query = _db.ToDoItems.AsQueryable();
-
-            query = query.Where(todo => todo.IsCleared == false && todo.UserId == param.UserID);
-
-            var result  = await query.Skip((param.PageIndex - 1) * param.PageSize).Take(param.PageSize).ToListAsync();
-
-            return result;
+            return await SpecificationEveluator<T>.GetQuery(_db.Set<T>().AsQueryable(), spec).ToListAsync();
         }
 
-        public async Task<int> CountItemAsync(string userId)
+        public async Task<int> CountItemAsync(Ispecification<T> spec)
         {
-            return await _db.ToDoItems.Where(todo => todo.IsCleared == false && todo.UserId == userId).CountAsync();
+            return await SpecificationEveluator<T>.GetQuery(_db.Set<T>().AsQueryable(), spec).CountAsync();
         }
 
         public async Task<ToDoItem> UpdateAsync(ToDoItem todoItem, string userId)

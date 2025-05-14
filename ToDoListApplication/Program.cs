@@ -9,6 +9,7 @@ using ToDoListApplication.DataAccess.Data;
 using ToDoListApplication.DataAccess.Data.SeedData;
 using ToDoListApplication.DataAccess.Identity;
 using ToDoListApplication.DataAccess.Identity.SeedData;
+using ToDoListApplication.DataAccess.Models;
 using ToDoListApplication.DataAccess.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -59,7 +60,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     });
 builder.Services.AddAuthorization();
 
-builder.Services.AddScoped<ITodoRepository, TodoRepository>();
+builder.Services.AddScoped<ITodoRepository<ToDoItem>, TodoRepository<ToDoItem>>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 
 var app = builder.Build();

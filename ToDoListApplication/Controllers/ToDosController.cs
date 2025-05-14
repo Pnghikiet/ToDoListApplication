@@ -10,33 +10,39 @@ using ToDoListApplication.DataAccess.Repositories;
 using ToDoListApplication.Business.Services.Interface;
 using ToDoListApplication.Helpers;
 using ToDoListApplication.DataAccess.Parammeters;
+using Microsoft.AspNetCore.Authorization;
+using ToDoListApplication.DataAccess.Specifications;
 
 namespace ToDoListApplication.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class ToDosController : ControllerBase
     {
-        private readonly ITodoRepository _repo;
+        private readonly ITodoRepository<ToDoItem> _repo;
         private readonly IMapper _mapper;
 
-        public ToDosController(ITodoRepository repo, IMapper mapper)
+        public ToDosController(ITodoRepository<ToDoItem> repo, IMapper mapper)
         {
             _repo = repo;
             _mapper = mapper;
         }
 
         [HttpGet]
-        public async Task<ActionResult<IReadOnlyList<ToDoItemDTO>>> GetAllItem([FromQuery]Params param)
+        public async Task<ActionResult<IReadOnlyList<Pagination<ToDoItemDTO>>>> GetAllItem([FromQuery]Params param)
         {
+            var spec = new TodoWithUserIdAndPagination(param);
 
-            var todos = await _repo.GetAllAsync(param);
+            var todos = await _repo.GetAllAsync(spec);
 
-            var total = await _repo.CountItemAsync(param.UserID);
+            var countspec = new TodoWithFilterForCount(param);
+
+            var total = await _repo.CountItemAsync(countspec);
 
             var totalPage = (int)Math.Ceiling(total * 1.0/ param.PageSize);
 
-            var todoDto = _mapper.Map<List<ToDoItem>, List<ToDoItemDTO>>(todos);
+            var todoDto = _mapper.Map<IReadOnlyList<ToDoItem>, List<ToDoItemDTO>>(todos);
 
             return Ok(new Pagination<ToDoItemDTO>(param.PageSize, param.PageIndex,total,totalPage,todoDto));
         }

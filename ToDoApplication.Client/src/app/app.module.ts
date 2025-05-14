@@ -6,6 +6,8 @@ import { AppComponent } from './app.component';
 import { TodoModule } from './todo/todo.module';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptors } from '@angular/common/http';
+import { jwtInterceptor } from './interceptors/jwt.interceptor';
 
 @NgModule({
   declarations: [
@@ -18,7 +20,8 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
     BrowserAnimationsModule
   ],
   providers: [
-    provideAnimationsAsync()
+    provideAnimationsAsync(),
+    provideHttpClient(withInterceptors([jwtInterceptor]))
   ],
   bootstrap: [AppComponent]
 })
